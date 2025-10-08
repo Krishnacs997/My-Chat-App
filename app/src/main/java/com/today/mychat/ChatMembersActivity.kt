@@ -34,7 +34,9 @@ class ChatMembersActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             MyChatTheme {
-                ChatMembersScreen()
+                ChatMembersScreen(
+                    onBackClick = { finish() }
+                )
             }
         }
     }
@@ -42,7 +44,9 @@ class ChatMembersActivity : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ChatMembersScreen() {
+fun ChatMembersScreen(
+    onBackClick: () -> Unit = {}
+) {
     val sampleMembers = listOf(
         ChatMember(
             id = "1",
@@ -106,8 +110,7 @@ fun ChatMembersScreen() {
                 title = { Text("Chat Members") },
                 navigationIcon = {
                     IconButton(onClick = { 
-                        // Go back to previous activity
-                        this@ChatMembersActivity.finish()
+                        onBackClick()
                     }) {
                         Icon(Icons.Default.ArrowBack, contentDescription = "Back")
                     }
@@ -226,6 +229,8 @@ fun ChatMemberItemPreview() {
 @Composable
 fun ChatMembersScreenPreview() {
     MyChatTheme {
-        ChatMembersScreen()
+        ChatMembersScreen(
+            onBackClick = { }
+        )
     }
 }
